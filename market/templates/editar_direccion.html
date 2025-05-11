@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Editar Dirección</h2>
+  <form method="POST">
+    <div class="form-group">
+      <label for="calle">Calle</label>
+      <input type="text" class="form-control" name="calle" value="{{ direccion.calle }}" required>
+    </div>
+    <div class="form-group">
+      <label for="ciudad">Ciudad</label>
+      <input type="text" class="form-control" name="ciudad" value="{{ direccion.ciudad }}" required>
+    </div>
+    <div class="form-group">
+      <label for="estado">Estado</label>
+      <input type="text" class="form-control" name="estado" value="{{ direccion.estado }}" required>
+    </div>
+    <div class="form-group">
+      <label for="cp">Código Postal</label>
+      <input type="text" class="form-control" name="cp" value="{{ direccion.cp }}" required>
+    </div>
+    <button type="submit" class="btn btn-success mt-3">Guardar Cambios</button>
+    <a href="{{ url_for('perfile_page') }}" class="btn btn-secondary mt-3">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

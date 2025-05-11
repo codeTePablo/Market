@@ -1,0 +1,10 @@
+flask --app run.py shell
+
+Reconstruir la imagen:
+docker-compose build
+
+Levantar los servicios (o reiniciarlos si ya estaban):
+docker-compose up
+
+O para reconstruir y levantar en un solo paso:
+docker-compose up --build

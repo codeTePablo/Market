@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Publicar un Nuevo Ítem</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.name.label }} {{ form.name(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.price.label }} {{ form.price(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.description.label }} {{ form.description(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-success">{{ form.submit.label }}</button>
+    </form>
+</div>
+{% endblock %}
+
+{% if new_item %}
+    <p>Código de barras generado: {{ new_item.barcode }}</p>
+{% endif %}

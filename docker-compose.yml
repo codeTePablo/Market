@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  market:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - carrito
+    networks:
+      - marketnet
+    environment:
+      - FLASK_APP=run.py
+    volumes:
+      - .:/app
+
+  carrito:
+    build:
+      context: ./cart_service
+      dockerfile: Dockerfile
+    ports:
+      - "5002:5002"
+    networks:
+      - marketnet
+    environment:
+      - FLASK_APP=cart_service.py
+
+networks:
+  marketnet:
+    driver: bridge

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Perfil{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Perfil del Usuario</h2>
+    <div class="row">
+        <!-- Sección de información personal -->
+        <div class="col-md-4 text-center">
+            <img src="{{ url_for('static', filename='img/default_profile.png') }}" class="img-fluid rounded-circle mb-3" width="150" height="150" alt="Foto de perfil">
+            <h4>{{ current_user.username }}</h4>
+            <p>{{ current_user.email }}</p>
+            <a href="#" class="btn btn-outline-primary btn-sm">Editar Perfil</a>
+        </div>
+
+        <!-- Sección de direcciones -->
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Direcciones de Envío</h5>
+                    <a href="{{ url_for('nueva_direccion') }}" class="btn btn-success btn-sm">Agregar nueva dirección</a>
+                </div>
+
+                <ul class="list-group">
+                    {% for direccion in user.direcciones %}
+                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ direccion.calle }}, {{ direccion.ciudad }}, {{ direccion.estado }}, {{ direccion.cp }}
+                        <div>
+                          <a href="{{ url_for('editar_direccion', direccion_id=direccion.id) }}" class="btn btn-sm btn-primary">Administrar</a>
+                          <form action="{{ url_for('eliminar_direccion', direccion_id=direccion.id) }}" method="POST" style="display:inline;">
+                            <button class="btn btn-sm btn-danger" type="submit">Eliminar</button>
+                          </form>
+                        </div>
+                      </li>
+                    {% else %}
+                      <li class="list-group-item">No tienes direcciones guardadas.</li>
+                    {% endfor %}
+                  </ul>
+                  
+            <!-- Sección de publicaciones -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Historial de Publicaciones</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for item in publicaciones %}
+                    <li class="list-group-item">
+                        {{ item.name }} - ${{ item.price }}
+                    </li>
+                    {% else %}
+                    <li class="list-group-item">No has publicado ningún ítem.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
