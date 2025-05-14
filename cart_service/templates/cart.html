@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carrito de Compras</title>
+</head>
+<body>
+    <h1>Carrito de Compras</h1>
+    {% if items %}
+        <ul>
+        {% for item in items %}
+            <li>{{ item.nombre }} - ${{ item.precio }} (ID: {{ item.id }})</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay artículos en el carrito.</p>
+    {% endif %}
+</body>
+</html>
