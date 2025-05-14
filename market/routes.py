@@ -9,6 +9,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from market.forms import RegisterForm, LoginForm, PurchaseItemForm, SellItemForm
 
 
+
 @app.route('/')
 @app.route('/home')
 def home_page():
@@ -172,24 +173,29 @@ def eliminar_direccion(direccion_id):
     return redirect(url_for('perfile_page'))
 
 
-@app.route('/agregar_carrito/<int:item_id>')
-def agregar_carrito(item_id):
+@app.route('/add_to_cart/<int:item_id>', methods=['POST'])
+@login_required
+def add_to_cart(item_id):
     item = Item.query.get_or_404(item_id)
-    data = {
-        'id': item.id,
-        'nombre': item.name,
-        'precio': item.price
+
+    payload = {
+        'item_id': item.id,
+        'name': item.name,
+        'price': item.price,
+        'user_id': current_user.id
     }
+
     try:
-        response = requests.post('http://127.0.0.1:5002/agregar', json=data)
+        # Envía los datos al microservicio del carrito
+        response = requests.post('http://carrito:5002/add_item', json=payload)
         if response.status_code == 200:
-            flash('Artículo agregado al carrito con éxito', 'success')
+            flash(f'{item.name} agregado al carrito con éxito.', category='success')
         else:
-            flash('No se pudo agregar al carrito', 'danger')
+            flash('Error al agregar al carrito.', category='danger')
     except Exception as e:
-        flash(f'Error al conectar con el carrito: {e}', 'danger')
-    
-    return redirect(url_for('market_page'))
+        flash(f'Error de conexión con el carrito: {str(e)}', category='danger')
+
+    return redirect(url_for('home_page'))
 
 
 
