@@ -195,7 +195,7 @@ def add_to_cart(item_id):
     except Exception as e:
         flash(f'Error de conexión con el carrito: {str(e)}', category='danger')
 
-    return redirect(url_for('home_page'))
+    return redirect(url_for('market_page'))
 
 
 
