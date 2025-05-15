@@ -179,7 +179,7 @@ def add_to_cart(item_id):
     item = Item.query.get_or_404(item_id)
 
     payload = {
-        'item_id': item.id,
+        'id': item.id,
         'name': item.name,
         'price': item.price,
         'user_id': current_user.id
