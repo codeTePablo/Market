@@ -46,7 +46,7 @@
                     <a class="nav-link">Welcome, {{ current_user.username }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://127.0.0.1:5002/">🛒 Carrito</a>
+                    <a class="nav-link" href=" http://127.0.0.1:5002/?user_id={{ current_user.id }}">🛒 Carrito</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('logout_page') }}">Logout</a>
