@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Confirmar Compra{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4 text-info">📦 Confirmar compra</h2>
+    <p>Selecciona una dirección para continuar:</p>
+
+    {% if direcciones %}
+        <div class="row">
+            {% for d in direcciones %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card shadow-sm p-3 h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Dirección #{{ d.id }}</h5>
+                            <p class="card-text">
+                                {{ d.calle }}<br>
+                                {{ d.ciudad }}, {{ d.estado }}<br>
+                                CP: {{ d.cp }}
+                            </p>
+                            <form action="/finalizar_compra" method="post">
+                                <input type="hidden" name="direccion_id" value="{{ d.id }}">
+                                <input type="hidden" name="user_id" value="{{ user_id }}">
+                                <button class="btn btn-success btn-block" type="submit">Usar esta dirección</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning">No tienes direcciones registradas. <a href="http://localhost:5000/perfile" class="alert-link">Agrega una desde tu perfil</a>.</div>
+    {% endif %}
+{% endblock %}

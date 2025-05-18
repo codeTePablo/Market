@@ -19,28 +19,31 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {% set total = 0 %}
-                    {% for item in items %}
-                        {% set total = total + item.price %}
-                        <tr>
-                            <td>{{ item.name }}</td>
-                            <td>${{ item.price }}</td>
-                            <td>{{ item.id }}</td>
-                            <td>
-                                <form action="/remove_item" method="post">
-                                    <input type="hidden" name="item_id" value="{{ item.id }}">
-                                    <input type="hidden" name="user_id" value="{{ user_id }}">
-                                    <button class="btn btn-danger btn-sm" type="submit">Eliminar</button>
-                                </form>
+                    <tbody>
+                        {% for item in items %}
+                            <tr>
+                                <td>{{ item['name'] }}</td>
+                                <td>${{ item['price'] }}</td>
+                                <td>{{ item['id'] }}</td>
+                                <td>
+                                    <form action="/remove_item" method="post">
+                                        <input type="hidden" name="item_id" value="{{ item['id'] }}">
+                                        <input type="hidden" name="user_id" value="{{ user_id }}">
+                                        <button class="btn btn-danger btn-sm" type="submit">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <!-- Fila con total y botón -->
+                        <tr class="table-secondary text-dark font-weight-bold">
+                            <td colspan="4">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Total: ${{ total }}</span>
+                                    <a href="http://localhost:5002/confirmacion?user_id={{ user_id }}" class="btn btn-primary">Confirmar</a>
+                                </div>
                             </td>
                         </tr>
-                    {% endfor %}
-                    <tr class="table-secondary text-dark font-weight-bold">
-                        <td colspan="1">Total:</td>
-                        <td colspan="3">${{ total }}</td>
-                    </tr>
-                </tbody>
+                    </tbody>
             </table>
         </div>
     {% else %}
