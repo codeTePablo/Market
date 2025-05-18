@@ -4,7 +4,7 @@ from market import app
 from market.models import Direccion
 from market.models import Item, User
 from market.forms import NuevaDireccionForm
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from market.forms import RegisterForm, LoginForm, PurchaseItemForm, SellItemForm
 
@@ -198,7 +198,23 @@ def add_to_cart(item_id):
     return redirect(url_for('market_page'))
 
 
+@app.route('/api/direcciones')
+def obtener_direcciones():
+    user_id = request.args.get('user_id')
+    if not user_id:
+        return jsonify({'error': 'user_id requerido'}), 400
 
+    direcciones = Direccion.query.filter_by(usuario_id=user_id).all()
+    return jsonify([
+        {
+            'id': d.id,
+            'calle': d.calle,
+            'ciudad': d.ciudad,
+            'estado': d.estado,
+            'cp': d.cp
+        }
+        for d in direcciones
+    ])
 
 
 

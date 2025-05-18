@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Finalizar Compra{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Izquierda: Resumen de compra -->
+    <div class="col-md-6 mb-4">
+        <h4 class="mb-3 text-info">🛍️ Resumen de tu compra</h4>
+        <ul class="list-group">
+            {% for item in items %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ item.name }}
+                    <span>${{ item.price }}</span>
+                </li>
+            {% endfor %}
+            <li class="list-group-item d-flex justify-content-between font-weight-bold bg-secondary text-white">
+                <span>Total:</span>
+                <span>${{ total }}</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Derecha: Métodos de pago -->
+    <div class="col-md-6">
+        <h4 class="mb-3 text-info">💳 Selecciona método de pago</h4>
+        <form action="/procesar_pago" method="post">
+            <input type="hidden" name="user_id" value="{{ user_id }}">
+            <input type="hidden" name="direccion_id" value="{{ direccion_id }}">
+
+            <ul class="list-group mb-3">
+                <li class="list-group-item">
+                    <div class="custom-control custom-radio">
+                        <input id="pm1" name="payment_method" type="radio" value="tarjeta_credito" class="custom-control-input" checked>
+                        <label class="custom-control-label" for="pm1">Tarjeta de Crédito</label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="custom-control custom-radio">
+                        <input id="pm2" name="payment_method" type="radio" value="tarjeta_debito" class="custom-control-input">
+                        <label class="custom-control-label" for="pm2">Tarjeta de Débito</label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="custom-control custom-radio">
+                        <input id="pm3" name="payment_method" type="radio" value="paypal" class="custom-control-input">
+                        <label class="custom-control-label" for="pm3">PayPal</label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="custom-control custom-radio">
+                        <input id="pm4" name="payment_method" type="radio" value="transferencia" class="custom-control-input">
+                        <label class="custom-control-label" for="pm4">Transferencia Bancaria</label>
+                    </div>
+                </li>
+            </ul>
+
+            <button class="btn btn-success btn-block" type="submit">Confirmar compra</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
